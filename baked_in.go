@@ -1308,17 +1308,13 @@ func hasValue(fl FieldLevel) bool {
 func requireCheckFieldKind(fl FieldLevel, param string) bool {
 	field := fl.Field()
 	if len(param) > 0 {
-		if fl.Parent().Kind() == reflect.Ptr {
-			field = fl.Parent().Elem().FieldByName(param)
-		} else {
-			field = fl.Parent().FieldByName(param)
-		}
+		field = fl.Parent().FieldByName(param)
 	}
 	switch field.Kind() {
 	case reflect.Slice, reflect.Map, reflect.Ptr, reflect.Interface, reflect.Chan, reflect.Func:
 		return !field.IsNil()
 	default:
-		if fl.(*validate).fldIsPointer && field.Interface() != nil {
+		if fl.(*validate).fldIsPointer && field.IsValid() && field.Interface() != nil {
 			return true
 		}
 		return field.IsValid() && field.Interface() != reflect.Zero(field.Type()).Interface()

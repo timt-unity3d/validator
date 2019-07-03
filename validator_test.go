@@ -8623,26 +8623,26 @@ func TestEndsWithValidation(t *testing.T) {
 func TestRequiredWith(t *testing.T) {
 	fieldVal := "test"
 	test := struct {
-		FieldB     bool              `validate:"omitempty" json:"field_b"`
+		FieldB     *string           `validate:"omitempty" json:"field_b"`
 		FieldRefB  *string           `validate:"required_with=FieldB" json:"field_refb"`
 		FieldE     string            `validate:"omitempty" json:"field_e"`
 		FieldER    string            `validate:"required_with=FieldE" json:"field_er"`
-		FieldRefE  string            `validate:"omitempty" json:"field_refe"`
+		FieldRefE  *string           `validate:"omitempty" json:"field_refe"`
 		FieldRefER *string           `validate:"required_with=FieldRefE" json:"field_refer"`
 		Field1     string            `validate:"omitempty" json:"field_1"`
 		Field2     *string           `validate:"required_with=Field1" json:"field_2"`
 		Field3     map[string]string `validate:"required_with=Field2" json:"field_3"`
 		Field4     interface{}       `validate:"required_with=Field3" json:"field_4"`
 		Field5     string            `validate:"required_with=Field3" json:"field_5"`
-		Field6     bool              `validate:"omitempty" json:"field_6"`
+		Field6     *string           `validate:"omitempty" json:"field_6"`
 		Field7     *string           `validate:"required_with=Field6" json:"field_7"`
 	}{
 		Field1: "test_field1",
 		Field2: &fieldVal,
 		Field3: map[string]string{"key": "val"},
-		Field4: "test",
+		Field4: &fieldVal,
 		Field5: "test",
-		Field6: true,
+		Field6: &fieldVal,
 		Field7: &fieldVal,
 	}
 
